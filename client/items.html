@@ -9,27 +9,30 @@
 </head>
 <body>
     <div id="app">
-        <h1>{{title}}</h1>
+        <h1>Json Objects</h1>
+        <ul>
+            <li v-for="object in objects">{{object.description}}</li>
+        </ul>
 
     </div>
 
     <script>
         import axios from "axios"
         
-        var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu18.gitpod.io/items";
+        var apiUrl = "http://localhost:3000/items";
         var obj = {title: 'heading'};
 
         new Vue({
             el:"#app",
             data () {
                 return {
-                    title: null
+                    objects: null
                 }
             },
             mounted () {
                 axios
                 .get(apiUrl)
-                .then(response => (this.title = response))
+                .then(response => (this.objects = response))
             }
         });
     </script>    
