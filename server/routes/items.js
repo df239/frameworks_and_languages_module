@@ -11,6 +11,15 @@ router.get('/', function(req, res) {
   res.json(items);
 });
 
+/* GET specific item */
+router.get('/:itemId', function(req, res){
+  var item = items.filter(obj => {
+    return obj.id == req.params.itemId
+  })[0];
+
+  res.json(item);
+});
+
 /* POST new item */
 router.post('/', function(req, res){
   var newID = items[items.length - 1].id + 1;
