@@ -1,18 +1,25 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors');
 
 var items = [
   {id:1, description:"Hello World"},
   {id:2, description:"Hello Everyone!"}
 ];
 
+var corsSetup = {
+  origin: '*',
+  methods: 'GET,POST,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type'
+}
+
 /* GET items listing */
-router.get('/', function(req, res) {
+router.get('/', cors(corsSetup), function(req, res) {
   res.json(items);
 });
 
 /* GET specific item */
-router.get('/:itemId', function(req, res){
+router.get('/:itemId', cors(corsSetup), function(req, res){
   var item = items.filter(obj => {
     return obj.id == req.params.itemId
   })[0];
@@ -21,17 +28,17 @@ router.get('/:itemId', function(req, res){
 });
 
 /* POST new item */
-router.post('/', function(req, res){
+router.post('/', cors(corsSetup), function(req, res){
   var newID = items[items.length - 1].id + 1;
   items.push({
     id: newID,
     description: req.body.description
   });
-  res.send("post successful");
+  //res.send("post successful");
 });
 
 /* DELETE a specific item */
-router.delete('/:itemId', function(req,res){
+router.delete('/:itemId', cors(corsSetup), function(req,res){
   //var itemIndex = items.map(mymapfunc).indexOf(req.params.itemId);
   /*
   function mymapfunc(value){
@@ -53,5 +60,7 @@ router.delete('/:itemId', function(req,res){
 
   res.send(itemFound? "successful deletion" : "item not found");
 });
+
+router.options("/*", cors(corsSetup));
 
 module.exports = router;

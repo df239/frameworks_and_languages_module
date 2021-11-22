@@ -32,7 +32,7 @@
             mounted () {
                 axios
                 .get(apiUrl)
-                .then(response => (this.objects = response))
+                .then(response => (this.objects = response.json()))
             }
         });
     </script>    
