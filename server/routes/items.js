@@ -27,19 +27,31 @@ router.post('/', function(req, res){
     id: newID,
     description: req.body.description
   });
-  res.send("successful post");
+  res.send("post successful");
 });
 
 /* DELETE a specific item */
 router.delete('/:itemId', function(req,res){
-  var itemIndex = items.map(mymapfunc).indexOf(req.params.itemId);
-
+  //var itemIndex = items.map(mymapfunc).indexOf(req.params.itemId);
+  /*
   function mymapfunc(value){
     return value.id;
+  }*/
+  //items.splice(itemIndex,1);
+
+  //items = items.filter(obj => obj.id != req.params.itemId);
+
+  var itemFound = false;
+
+  for(let i = 0; i < items.length; i++){
+    if(items[i].id == req.params.itemId){
+      items.splice(i,1);
+      itemFound = true;
+      break;
+    }
   }
 
-  items.splice(itemIndex,1);
-  res.send("successful deletion");
+  res.send(itemFound? "successful deletion" : "item not found");
 });
 
 module.exports = router;
