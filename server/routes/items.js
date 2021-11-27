@@ -7,36 +7,52 @@ var items = {
   2: {id:2, description:"Hello Everyone!"}
 };
 
-var corsSetup = {
+/* CORS setup */
+var corsSetupGeneral = {
   origin: '*',
-  methods: 'GET,POST,DELETE,OPTIONS',
+  methods: 'GET,POST,OPTIONS',
+  allowedHeaders: 'Content-Type'
+}
+var corsSetupSpecific = {
+  origin: '*',
+  methods: 'GET,DELETE,OPTIONS',
   allowedHeaders: 'Content-Type'
 }
 
-/* GET items listing */
-router.get('/', cors(corsSetup), function(req, res) {
-  res.json(items);
-});
-
-/* GET specific item */
-router.get('/:itemId', cors(corsSetup), function(req, res){
-  var key = parseInt(req.params.itemId);
-  if(items.hasOwnProperty(key)){
-    var item = items[key];
-    res.json(item);
+/* GET all items */
+router.get('/', cors(corsSetupGeneral), function(req, res){
+  if(Object.keys(items).length == 0){
+    res.status(204).json({message:"No available items."});
   }
   else{
-    res.json({message:"Item does not exist."});
-  }  
+    res.json(items);
+  }
 });
 
-/* POST new item */
-router.post('/', cors(corsSetup), function(req, res){
+/* GET a specific item */
+router.get('/:itemId', cors(corsSetupSpecific), function(req, res){
+  if(Object.keys(items).length == 0){
+    res.status(204).json({message:"No available items."});
+  }
+  else{
+    var key = parseInt(req.params.itemId);
+    if(items.hasOwnProperty(key)){
+      var item = items[key];
+      res.json(item);
+    }
+    else{
+      res.status(404).json({message:"Item does not exist."});
+    }
+  }
+});
+
+/* POST a new item */
+router.post('/', cors(corsSetupGeneral), function(req, res){
   var maxIndex = Math.max.apply(null,Object.keys(items));
   var newID = maxIndex + 1;
   items[newID] = {id:newID, description:req.body.description};
   if(items.hasOwnProperty(newID)){
-    res.json({message:"Post successful, new ID is "+newID+"."});
+    res.status(201).json({message:"Post successful, new ID is "+newID+"."});
   }
   else{
     res.json({message:"Post unsuccessful."})
@@ -45,17 +61,19 @@ router.post('/', cors(corsSetup), function(req, res){
 });
 
 /* DELETE a specific item */
-router.delete('/:itemId', cors(corsSetup), function(req,res){
+router.delete('/:itemId', cors(corsSetupSpecific), function(req,res){
   var index = parseInt(req.params.itemId);
   if(items.hasOwnProperty(index)){
     delete items[index];
-    res.json({message:"Deletion successful."})
+    res.status(204).json({message:"Deletion successful."})
   }
   else{
     res.json({message:"Item does not exist."});
   }  
 });
 
-router.options("/*", cors(corsSetup));
+/* OPTIONS request */
+router.options("/", cors(corsSetupGeneral));
+router.options("/:itemId", cors(corsSetupSpecific));
 
 module.exports = router;
