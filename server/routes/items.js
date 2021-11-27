@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var cors = require('cors');
 
-var items = [
-  {id:1, description:"Hello World"},
-  {id:2, description:"Hello Everyone!"}
-];
+var items = {
+  1: {id:1, description:"Hello World"},
+  2: {id:2, description:"Hello Everyone!"}
+};
 
 var corsSetup = {
   origin: '*',
@@ -20,45 +20,40 @@ router.get('/', cors(corsSetup), function(req, res) {
 
 /* GET specific item */
 router.get('/:itemId', cors(corsSetup), function(req, res){
-  var item = items.filter(obj => {
-    return obj.id == req.params.itemId
-  })[0];
-
-  res.json(item);
+  var key = parseInt(req.params.itemId);
+  if(items.hasOwnProperty(key)){
+    var item = items[key];
+    res.json(item);
+  }
+  else{
+    res.json({message:"Item does not exist."});
+  }  
 });
 
 /* POST new item */
 router.post('/', cors(corsSetup), function(req, res){
-  var newID = items[items.length - 1].id + 1;
-  items.push({
-    id: newID,
-    description: req.body.description
-  });
-  //res.send("post successful");
+  var maxIndex = Math.max.apply(null,Object.keys(items));
+  var newID = maxIndex + 1;
+  items[newID] = {id:newID, description:req.body.description};
+  if(items.hasOwnProperty(newID)){
+    res.json({message:"Post successful, new ID is "+newID+"."});
+  }
+  else{
+    res.json({message:"Post unsuccessful."})
+  }
+
 });
 
 /* DELETE a specific item */
 router.delete('/:itemId', cors(corsSetup), function(req,res){
-  //var itemIndex = items.map(mymapfunc).indexOf(req.params.itemId);
-  /*
-  function mymapfunc(value){
-    return value.id;
-  }*/
-  //items.splice(itemIndex,1);
-
-  //items = items.filter(obj => obj.id != req.params.itemId);
-
-  var itemFound = false;
-
-  for(let i = 0; i < items.length; i++){
-    if(items[i].id == req.params.itemId){
-      items.splice(i,1);
-      itemFound = true;
-      break;
-    }
+  var index = parseInt(req.params.itemId);
+  if(items.hasOwnProperty(index)){
+    delete items[index];
+    res.json({message:"Deletion successful."})
   }
-
-  res.send(itemFound? "successful deletion" : "item not found");
+  else{
+    res.json({message:"Item does not exist."});
+  }  
 });
 
 router.options("/*", cors(corsSetup));
