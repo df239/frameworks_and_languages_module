@@ -9,8 +9,13 @@
 </head>
 <body>
     <div id="app">
-        <div v-if="obj">
-            <p>{{ obj }}</p>
+        <div v-if="items">
+            <ul>
+                <li v-for="item in items">
+                    <h3>Item {{ item.id }}</h3>
+                    <p>{{ item.description }}</p>
+                </li>
+            </ul>
         </div>
 
         
@@ -18,21 +23,21 @@
             //var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu18.gitpod.io/items";
             var apiUrl = "http://localhost:3000"
 
-            const Items = {
+            const app = Vue.createApp({
                 data() {
                     return {
-                        obj: null
+                        items: null
                     }
                 },
                 mounted() {
                     fetch(apiUrl+"/items")
                         .then(res => res.json())
-                        .then(data => this.obj = data)
+                        .then(data => this.items = data)
                         .catch(err => console.log(err.message))
                 }
-            }
+            })
 
-            Vue.createApp(Items).mount('#app')
+            app.mount('#app')
         </script>
     </div>
 </body>
