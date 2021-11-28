@@ -15,6 +15,7 @@
                 <li v-for="item in items">
                     <h3>Item {{ item.id }}</h3>
                     <p>{{ item.description }}</p>
+                    <button @click="deleteItem(item)">Delete item {{ item.id }}</button>
                 </li>
             </ul>
         </div>
@@ -40,6 +41,7 @@
                             .then(data => this.items = data)
                             .catch(err => console.log(err.message))
                     },
+
                     async addItem(){
                         await fetch(apiUrl + "/items",{
                             method: 'POST',
@@ -47,6 +49,14 @@
                                 'Content-Type': 'application/json'
                             },
                             body: '{"description":"Hi Everybody"}'
+                        }).catch(err => console.log(err.message))
+                        
+                        this.loadItems()
+                    },
+
+                    async deleteItem(item){
+                        await fetch(apiUrl + "/items/" + item.id, {
+                            method: 'DELETE'
                         }).catch(err => console.log(err.message))
                         
                         this.loadItems()
