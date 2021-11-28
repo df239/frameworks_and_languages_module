@@ -10,6 +10,8 @@
 <body>
     <div id="app">
         <button @click="addItem">Add Item</button>
+        <span>Item message: </span>
+        <input type="text" v-model="itemMessage" required>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
@@ -28,7 +30,8 @@
             const app = Vue.createApp({
                 data() {
                     return {
-                        items: null
+                        items: null,
+                        itemMessage: ''
                     }
                 },
                 mounted() {
@@ -43,12 +46,14 @@
                     },
 
                     async addItem(){
+                        data = {description: this.itemMessage}
+                        
                         await fetch(apiUrl + "/items",{
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: '{"description":"Hi Everybody"}'
+                            body: JSON.stringify(data)
                         }).catch(err => console.log(err.message))
                         
                         this.loadItems()
