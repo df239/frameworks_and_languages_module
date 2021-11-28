@@ -11,19 +11,13 @@
     <div id="app">
         <form>
             <input type="submit" @click="addItem" value="Add Item"></input>
-            <label>User Id: </label>
+            <label> User: </label>
             <input type="text" v-model="userId" required>
-            <label>Description: </label>
+            <label> Description: </label>
             <input type="text" v-model="description" required>
-            <label>Image: </label>
-            <input type="text" v-model="image">
-            <label>Lat: </label>
-            <input type="text" v-model="lat" required>
-            <label>Lon: </label>
-            <input type="text" v-model="lon" required>
-            <label>Keywords: </label>
-            <input type="text" v-model="keywords_string" required>
         </form>
+        <p>{{ userId }}</p>
+        <p>{{ description }}</p>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
@@ -45,12 +39,7 @@
                         items: null,
 
                         userId:'',
-                        image:'',
-                        description:'',
-                        lat:0,
-                        lon:0,
-                        keywords:[],
-                        keywords_string:''
+                        description:''
                     }
                 },
                 mounted() {
@@ -65,25 +54,19 @@
                     },
 
                     async addItem(){
-                        for(let word in this.keywords_string.split(",")){
-                            this.keywords.push(word.trim())
-                            console.log(word.trim())
-                        }
                         var data = {
                             user_id: this.userId,
-                            image: this.image,
-                            description: this.description,
-                            lat: parseInt(this.lat),
-                            lon: parseInt(this.lon),
-                            keywords: this.keywords
+                            description: this.description
                         }
-                        await fetch(apiUrl + "/items",{
+
+                        console.log(data)
+                        var response = await fetch(apiUrl + "/items",{
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(data)
-                        }).catch(err => console.log(err.message))
+                        }).catch(err => console.log(err))
                         
                         this.loadItems()
                     },
