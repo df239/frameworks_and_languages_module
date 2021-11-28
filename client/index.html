@@ -5,36 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
 </head>
 <body>
     <div id="app">
-        <h1>Json Objects</h1>
-        <ul>
-            <li v-for="object in objects">{{object.description}}</li>
-        </ul>
+        <div v-if="obj">
+            <p>{{ obj }}</p>
+        </div>
 
-    </div>
-
-    <script>
-        import axios from "axios"
         
-        var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu18.gitpod.io/items";
-        var obj = {title: 'heading'};
+        <script>
+            //var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu18.gitpod.io/items";
+            var apiUrl = "http://localhost:3000"
 
-        new Vue({
-            el:"#app",
-            data () {
-                return {
-                    objects: null
+            const Items = {
+                data() {
+                    return {
+                        obj: null
+                    }
+                },
+                mounted() {
+                    fetch(apiUrl+"/items")
+                        .then(res => res.json())
+                        .then(data => this.obj = data)
+                        .catch(err => console.log(err.message))
                 }
-            },
-            mounted () {
-                axios
-                .get(apiUrl)
-                .then(response => (this.objects = response.json()))
             }
-        });
-    </script>    
+
+            Vue.createApp(Items).mount('#app')
+        </script>
+    </div>
 </body>
 </html>
