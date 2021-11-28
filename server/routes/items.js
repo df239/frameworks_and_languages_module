@@ -3,10 +3,7 @@ var router = express.Router();
 var cors = require('cors');
 
 var items = {
-  1: { id: 1,
-    user_id: "User1",
-    description: "My cat",
-  }
+  1: { id: 1, user_id: "User1", description: "My cat" }
 };
 
 /* CORS setup */

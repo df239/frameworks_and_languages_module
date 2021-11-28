@@ -9,15 +9,11 @@
 </head>
 <body>
     <div id="app">
-        <form>
-            <input type="submit" @click="addItem" value="Add Item"></input>
-            <label> User: </label>
-            <input type="text" v-model="userId" required>
-            <label> Description: </label>
-            <input type="text" v-model="description" required>
-        </form>
-        <p>{{ userId }}</p>
-        <p>{{ description }}</p>
+        <button @click="addItem">Add Item</button>
+        <label> User: </label>
+        <input type="text" v-model="userId" required>
+        <label> Description: </label>
+        <input type="text" v-model="description" required>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
