@@ -9,14 +9,26 @@
 </head>
 <body>
     <div id="app">
-        <button @click="addItem">Add Item</button>
-        <span>Item message: </span>
-        <input type="text" v-model="itemMessage" required>
+        <form>
+            <input type="submit" @click="addItem" value="Add Item"></input>
+            <label>User Id: </label>
+            <input type="text" v-model="userId" required>
+            <label>Description: </label>
+            <input type="text" v-model="description" required>
+            <label>Image: </label>
+            <input type="text" v-model="image">
+            <label>Lat: </label>
+            <input type="text" v-model="lat" required>
+            <label>Lon: </label>
+            <input type="text" v-model="lon" required>
+            <label>Keywords: </label>
+            <input type="text" v-model="keywords_string" required>
+        </form>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
-                    <h3>Item {{ item.id }}</h3>
-                    <p>{{ item.description }}</p>
+                    <h4>Author {{ item.user_id }}</h4>
+                    <img :src="item.image" :alt="item.description"/>
                     <button @click="deleteItem(item)">Delete item {{ item.id }}</button>
                 </li>
             </ul>
@@ -31,7 +43,14 @@
                 data() {
                     return {
                         items: null,
-                        itemMessage: ''
+
+                        userId:'',
+                        image:'',
+                        description:'',
+                        lat:0,
+                        lon:0,
+                        keywords:[],
+                        keywords_string:''
                     }
                 },
                 mounted() {
@@ -46,8 +65,18 @@
                     },
 
                     async addItem(){
-                        data = {description: this.itemMessage}
-                        
+                        for(let word in this.keywords_string.split(",")){
+                            this.keywords.push(word.trim())
+                            console.log(word.trim())
+                        }
+                        var data = {
+                            user_id: this.userId,
+                            image: this.image,
+                            description: this.description,
+                            lat: parseInt(this.lat),
+                            lon: parseInt(this.lon),
+                            keywords: this.keywords
+                        }
                         await fetch(apiUrl + "/items",{
                             method: 'POST',
                             headers: {
