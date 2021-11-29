@@ -14,11 +14,16 @@
         <input type="text" v-model="userId" required>
         <label> Description: </label>
         <input type="text" v-model="description" required>
+        <label> Lat: </label>
+        <input type="number" v-model="lat" required>
+        <label> Lon: </label>
+        <input type="number" v-model="lon" required>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
                     <h4>Author {{ item.user_id }}</h4>
-                    <img :src="item.image" :alt="item.description"/>
+                    <img :src="item.image" :alt="item.description"/><br/>
+                    <p>Lat: {{ item.lat }}   Lon: {{ item.lon }}</p>
                     <button @click="deleteItem(item)">Delete item {{ item.id }}</button>
                 </li>
             </ul>
@@ -26,8 +31,8 @@
 
         
         <script>
-            //var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu18.gitpod.io/items";
-            var apiUrl = "http://localhost:3000"
+            var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu17.gitpod.io";
+            //var apiUrl = "http://localhost:3000"
 
             const app = Vue.createApp({
                 data() {
@@ -35,7 +40,9 @@
                         items: null,
 
                         userId:'',
-                        description:''
+                        description:'',
+                        lat:'',
+                        lon:''
                     }
                 },
                 mounted() {
@@ -52,7 +59,9 @@
                     async addItem(){
                         var data = {
                             user_id: this.userId,
-                            description: this.description
+                            description: this.description,
+                            lat: this.lat,
+                            lon: this.lon
                         }
 
                         console.log(data)
@@ -80,6 +89,5 @@
             app.mount('#app')
         </script>
     </div>
->>>>>>> b50e70d7f4a44fd999c064e8d70fa7b3b33651fc
 </body>
 </html>

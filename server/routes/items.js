@@ -3,7 +3,9 @@ var router = express.Router();
 var cors = require('cors');
 
 var items = {
-  1: { id: 1, user_id: "User1", description: "My cat" }
+  1: { id: 1, user_id: "User1", description: "My cat",
+  lat: 18.684, lon: 148.394
+}
 };
 
 /* CORS setup */
@@ -53,6 +55,8 @@ router.post('/', cors(corsSetupGeneral), function(req, res){
     id:newID,
     user_id: req.body.user_id,
     description: req.body.description,
+    lat: req.body.lat,
+    lon: req.body.lon
   };
   if(items.hasOwnProperty(newID)){
     res.status(201).json({message:"Post successful, new ID is "+newID+"."});
