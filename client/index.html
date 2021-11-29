@@ -10,31 +10,26 @@
 <body>
     <div id="app">
         <h1>Json Objects</h1>
-        <ul>
-            <li v-for="object in objects">{{object.description}}</li>
-        </ul>
+        <span>{{response.id}}</span>
 
     </div>
 
-    <script>
-        import axios from "axios"
-        
-        var apiUrl = "https://3000-silver-impala-bbndrhb9.ws-eu18.gitpod.io/items";
-        var obj = {title: 'heading'};
+    <script>        
+        const apiUrl = "https://3000-silver-impala-bbndrhb9.ws-prod-ws-eu19.gitpod.io/items";
 
-        new Vue({
-            el:"#app",
-            data () {
-                return {
-                    objects: null
+        const Objects = {
+            data(){
+                return{
+                    response=null
                 }
             },
-            mounted () {
-                axios
-                .get(apiUrl)
-                .then(response => (this.objects = response.json()))
+            mounted(){
+                let res = await fetch(apiUrl);
+                this.response = (await res.json())[1];
+
             }
-        });
+        };
+        Vue.createApp(Objects).mount('#app');
     </script>    
 </body>
 </html>
