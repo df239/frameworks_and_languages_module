@@ -33,7 +33,9 @@
 
         
         <script>
-            var apiUrl = "https://8000-silver-impala-bbndrhb9.ws-eu17.gitpod.io";
+            const urlParams = new URLSearchParams(window.location.search);
+	        const apiUrl = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
+            //var apiUrl = "https://8000-silver-impala-bbndrhb9.ws-eu17.gitpod.io";
             //var apiUrl = "http://localhost:8000"
 
             const app = Vue.createApp({
