@@ -18,6 +18,8 @@
         <input type="number" v-model="lat" required>
         <label> Lon: </label>
         <input type="number" v-model="lon" required>
+        <label> Keywords: </label>
+        <input type="text" v-model="keywords_string" required>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
@@ -42,7 +44,8 @@
                         userId:'',
                         description:'',
                         lat:'',
-                        lon:''
+                        lon:'',
+                        keywords_string:''
                     }
                 },
                 mounted() {
@@ -57,11 +60,14 @@
                     },
 
                     async addItem(){
+                        var arr = this.keywords_string.split(',')
+                        arr = arr.map(s => s.trim())
                         var data = {
                             user_id: this.userId,
                             description: this.description,
                             lat: this.lat,
-                            lon: this.lon
+                            lon: this.lon,
+                            keywords: arr
                         }
 
                         console.log(data)
