@@ -3,8 +3,7 @@ var router = express.Router();
 var cors = require('cors');
 
 var items = {
-  1: {id:1, description:"Hello World"},
-  2: {id:2, description:"Hello Everyone!"}
+  1: { id: 1, user_id: "User1", description: "My cat" }
 };
 
 /* CORS setup */
@@ -50,7 +49,11 @@ router.get('/:itemId', cors(corsSetupSpecific), function(req, res){
 router.post('/', cors(corsSetupGeneral), function(req, res){
   var maxIndex = Math.max.apply(null,Object.keys(items));
   var newID = maxIndex + 1;
-  items[newID] = {id:newID, description:req.body.description};
+  items[newID] = {
+    id:newID,
+    user_id: req.body.user_id,
+    description: req.body.description,
+  };
   if(items.hasOwnProperty(newID)){
     res.status(201).json({message:"Post successful, new ID is "+newID+"."});
   }
