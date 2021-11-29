@@ -79,10 +79,10 @@ router.delete('/:itemId', cors(corsSetupSpecific), function(req,res){
   var index = parseInt(req.params.itemId);
   if(items.hasOwnProperty(index)){
     delete items[index];
-    res.status(204).json({message:"Deletion successful."})
+    res.status(201).json({message:"Deletion successful."})
   }
   else{
-    res.json({message:"Item does not exist."});
+    res.status(404).json({message:"Item does not exist."});
   }  
 });
 
