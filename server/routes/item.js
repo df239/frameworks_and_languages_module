@@ -16,16 +16,6 @@ var corsSetupSpecific = {
   allowedHeaders: 'Content-Type'
 }
 
-/* GET all items */
-router.get('/', cors(corsSetupGeneral), function(req, res){
-  if(Object.keys(items).length == 0){
-    res.status(204).json({message:"No available items."});
-  }
-  else{
-    res.json(items);
-  }
-});
-
 /* GET a specific item */
 router.get('/:itemId', cors(corsSetupSpecific), function(req, res){
   if(Object.keys(items).length == 0){
