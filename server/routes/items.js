@@ -13,16 +13,30 @@ var corsSetupGeneral = {
 
 /* GET all items */
 router.get('/', cors(corsSetupGeneral), function(req, res){
-    arr = []
-    for (const [key, value] of Object.entries(items)) {
-        arr.push(value);
-    }
-    if(Object.keys(arr).length == 0){
-      res.status(204).json({message:"No available items."});
-    }
-    else{
+  arr = []
+  for (let [key, value] of Object.entries(items)) {
+    arr.push(value);
+  }
+  if(Object.keys(arr).length == 0){
+    res.status(204).json({message:"No available items."});
+  }
+  else{
+    var filters = req.query;
+    if (filters == null || filters.length == 0){
       res.status(200).json(arr);
     }
+    else{
+      let filtered = arr.filter(function(item){
+        for (let [key,value] of Object.entries(filters)){
+          if (item[key] != value){
+            return false;
+          }
+        }
+        return true;
+      });
+      res.status(200).json(filtered);
+    }
+  }
 });
 
 module.exports = router;
