@@ -9,26 +9,26 @@
 </head>
 <body>
     <div id="app">
-        <button @click="addItem">Add Item</button>
+        <button @click="create_item">Add Item</button>
         <label> User: </label>
-        <input type="text" v-model="userId" required>
+        <input name="user_id" type="text" v-model="userId" required>
         <label> Description: </label>
-        <input type="text" v-model="description" required>
+        <input name="description" type="text" v-model="description" required>
         <label> Image: </label>
-        <input type="text" v-model="image">
+        <input name="image" type="text" v-model="image">
         <label> Lat: </label>
-        <input type="number" v-model="lat" required>
+        <input name="lat" type="number" v-model="lat" required>
         <label> Lon: </label>
-        <input type="number" v-model="lon" required>
+        <input name="lon" type="number" v-model="lon" required>
         <label> Keywords: </label>
-        <input type="text" v-model="keywords_string" required>
+        <input name="keywords" type="text" v-model="keywords_string" required>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
                     <h4>Author {{ item.user_id }}</h4>
                     <img :src="item.image" :alt="item.description"/><br/>
                     <p>Lat: {{ item.lat }}   Lon: {{ item.lon }}</p>
-                    <button @click="deleteItem(item)">Delete item {{ item.id }}</button>
+                    <button @click="delete_item(item)">Delete item {{ item.id }}</button>
                 </li>
             </ul>
         </div>
@@ -54,17 +54,17 @@
                     }
                 },
                 mounted() {
-                    this.loadItems()
+                    this.load_items()
                 },
                 methods:{
-                    loadItems(){
+                    load_items(){
                         fetch(apiUrl + "/items")
                             .then(res => res.json())
                             .then(data => this.items = data)
                             .catch(err => console.log(err.message))
                     },
 
-                    async addItem(){
+                    async create_item(){
                         var arr = this.keywords_string.split(',')
                         arr = arr.map(s => s.trim())
                         var data = {
@@ -85,15 +85,15 @@
                             body: JSON.stringify(data)
                         }).catch(err => console.log(err))
                         
-                        this.loadItems()
+                        this.load_items()
                     },
 
-                    async deleteItem(item){
+                    async delete_item(item){
                         await fetch(apiUrl + "/item/" + item.id, {
                             method: 'DELETE'
                         }).catch(err => console.log(err.message))
                         
-                        this.loadItems()
+                        this.load_items()
                     }
                 }
             })
