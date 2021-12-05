@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/vue@next"></script>
 </head>
 <body>
-    <div id="app">
+    <div id="main">
         <button @click="create_item">Add Item</button>
         <label> User: </label>
         <input name="user_id" type="text" v-model="userId" required>
@@ -98,7 +98,7 @@
                 }
             })
 
-            app.mount('#app')
+            app.mount('#main')
         </script>
     </div>
 </body>
