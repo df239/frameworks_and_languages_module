@@ -25,9 +25,13 @@
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
-                    <h4>Author {{ item.user_id }}</h4>
+                    <h4 data-field="id">Item {{ item.id }}</h4>
+                    <p>By {{ item.user_id }}</p>
                     <img :src="item.image" :alt="item.description"/><br/>
                     <p>Lat: {{ item.lat }}   Lon: {{ item.lon }}</p>
+                    <ul>
+                        <li v-for="word in item.keywords">{{ word }}</li>
+                    </ul>
                     <button @click="delete_item(item)">Delete item {{ item.id }}</button>
                 </li>
             </ul>
