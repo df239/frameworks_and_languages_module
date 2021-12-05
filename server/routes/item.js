@@ -40,11 +40,12 @@ router.post('/', cors(corsSetupGeneral), function(req, res){
   var body = req.body;
   console.log(body);
   var required = ["user_id","description","lat","lon","keywords"];
-  if((Object.keys(body)).every(i => required.includes(i))){
+  if (required.every(i => (Object.keys(body)).includes(i))){
     items[newID] = {
       id:newID,
       user_id: req.body.user_id,
       description: req.body.description,
+      image: req.body.image,
       lat: req.body.lat,
       lon: req.body.lon,
       keywords: req.body.keywords

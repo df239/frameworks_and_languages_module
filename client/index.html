@@ -14,6 +14,8 @@
         <input type="text" v-model="userId" required>
         <label> Description: </label>
         <input type="text" v-model="description" required>
+        <label> Image: </label>
+        <input type="text" v-model="image">
         <label> Lat: </label>
         <input type="number" v-model="lat" required>
         <label> Lon: </label>
@@ -45,6 +47,7 @@
 
                         userId:'',
                         description:'',
+                        image:'',
                         lat:'',
                         lon:'',
                         keywords_string:''
@@ -67,6 +70,7 @@
                         var data = {
                             user_id: this.userId,
                             description: this.description,
+                            image: this.image,
                             lat: this.lat,
                             lon: this.lon,
                             keywords: arr
