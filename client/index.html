@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="main">
-        <button @click="create_item">Add Item</button>
+        <button data-action="create_item" @click="create_item">Add Item</button>
         <label> User: </label>
         <input name="user_id" type="text" v-model="userId" required>
         <label> Description: </label>
@@ -32,7 +32,7 @@
                     <ul>
                         <li v-for="word in item.keywords">{{ word }}</li>
                     </ul>
-                    <button @click="delete_item(item)">Delete item {{ item.id }}</button>
+                    <button data-action="delete" @click="delete_item(item)">Delete item {{ item.id }}</button>
                 </li>
             </ul>
         </div>
