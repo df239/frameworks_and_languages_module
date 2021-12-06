@@ -70,6 +70,8 @@
                     },
 
                     async create_item(){
+                        /*split string from 'keywords' input into an array
+                          and delete white-space characters from every element*/
                         var arr = this.keywords_string.split(',')
                         arr = arr.map(s => s.trim())
                         var data = {
@@ -82,6 +84,7 @@
                         }
 
                         console.log(data)
+                        //send a POST request to the server with the new data and correct headers
                         var response = await fetch(apiUrl + "/item",{
                             method: 'POST',
                             headers: {
@@ -94,6 +97,7 @@
                     },
 
                     async delete_item(item){
+                        //send a DELETE request to the server
                         await fetch(apiUrl + "/item/" + item.id, {
                             method: 'DELETE'
                         }).catch(err => console.log(err.message))
