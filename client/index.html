@@ -11,19 +11,24 @@
 </head>
 <body>
     <div id="main">
-        <button data-action="create_item" @click="create_item">Add Item</button>
+        <div id="form">
+            <div class="row">
+                <input class="m-3 col" name="user_id" type="text" v-model="userId" placeholder="User ID" required>
+                <input class="m-3 col" name="lat" type="number" v-model="lat" placeholder="Latitude" required>
+            </div>
+            <div class="row">
+                <input class="m-3 col" name="image" type="text" v-model="image" placeholder="Image URL">
+                <input class="m-3 col" name="lon" type="number" v-model="lon" placeholder="Longitude" required>
+            </div>
+            <div class="row">
+                <input class="m-3 col" name="description" type="text" v-model="description" placeholder="Description" required>
 
-        <input name="user_id" type="text" v-model="userId" placeholder="User ID" required>
-
-        <input name="description" type="text" v-model="description" placeholder="Description" required>
-
-        <input name="image" type="text" v-model="image" placeholder="Image URL">
-
-        <input name="lat" type="number" v-model="lat" placeholder="Latitude" required>
-
-        <input name="lon" type="number" v-model="lon" placeholder="Longitude" required>
-
-        <input name="keywords" type="text" v-model="keywords_string" placeholder="Keywords" title="Keywords must be separated by commas" required>
+            </div>
+            <input name="keywords" type="text" v-model="keywords_string" placeholder="Keywords"
+                title="Keywords must be separated by commas" required>
+            <button class="button" data-action="create_item" @click="create_item">Add Item</button>
+        </div>
+        
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
