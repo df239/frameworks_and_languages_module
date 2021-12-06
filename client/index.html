@@ -12,18 +12,18 @@
 <body>
     <div id="main">
         <button data-action="create_item" @click="create_item">Add Item</button>
-        <label> User: </label>
-        <input name="user_id" type="text" v-model="userId" required>
-        <label> Description: </label>
-        <input name="description" type="text" v-model="description" required>
-        <label> Image: </label>
-        <input name="image" type="text" v-model="image">
-        <label> Lat: </label>
-        <input name="lat" type="number" v-model="lat" required>
-        <label> Lon: </label>
-        <input name="lon" type="number" v-model="lon" required>
-        <label> Keywords: </label>
-        <input name="keywords" type="text" v-model="keywords_string" required>
+
+        <input name="user_id" type="text" v-model="userId" placeholder="User ID" required>
+
+        <input name="description" type="text" v-model="description" placeholder="Description" required>
+
+        <input name="image" type="text" v-model="image" placeholder="Image URL">
+
+        <input name="lat" type="number" v-model="lat" placeholder="Latitude" required>
+
+        <input name="lon" type="number" v-model="lon" placeholder="Longitude" required>
+
+        <input name="keywords" type="text" v-model="keywords_string" placeholder="Keywords" title="Keywords must be separated by commas" required>
         <div v-if="items">
             <ul>
                 <li v-for="item in items">
