@@ -16,7 +16,7 @@ var corsSetupGeneral = {
 router.get('/', cors(corsSetupGeneral), function(req, res){
   //copy data from the items dictionary into a temporary array
   arr = []
-  for (let [key, value] of Object.entries(items)) {
+  for (let value of Object.values(items)) {
     arr.push(value);
   }
   if(Object.keys(arr).length == 0){
