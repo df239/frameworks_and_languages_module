@@ -13,20 +13,22 @@
     <div id="main">
         <div id="form">
             <div class="row">
-                <input class="m-3 col" name="user_id" type="text" v-model="userId" placeholder="User ID" required>
-                <input class="m-3 col" name="lat" type="number" v-model="lat" placeholder="Latitude" required>
+                <button class="btn btn-primary m-4 col-1" data-action="create_item" @click="create_item">Add Item</button>
+                <div class="col">
+                    <div class="row">
+                        <input class="m-2 mt-4 mx-4 col" name="user_id" type="text" v-model="userId" placeholder="User ID" required>
+                        <input class="m-2 mt-4 mx-4 col-2" name="lat" type="number" v-model="lat" placeholder="Latitude" required>
+                        <input class="m-2 mt-4 mx-4 col" name="image" type="text" v-model="image" placeholder="Image URL">
+                    </div>
+                    <div class="row">
+                        <input class="m-2 mx-4 col" name="image" type="text" v-model="image" placeholder="Image URL">
+                        <input class="m-2 mx-4 col-2" name="lon" type="number" v-model="lon" placeholder="Longitude" required>
+                        <input class="m-2 mx-4 col" name="keywords" type="text" v-model="keywords_string" placeholder="Keywords"
+                            title="Keywords must be separated by commas" required>
+                    </div>
+                </div>  
+                <textarea class="m-4 col-3" name="description" v-model="description" placeholder="Description" required></textarea>              
             </div>
-            <div class="row">
-                <input class="m-3 col" name="image" type="text" v-model="image" placeholder="Image URL">
-                <input class="m-3 col" name="lon" type="number" v-model="lon" placeholder="Longitude" required>
-            </div>
-            <div class="row">
-                <input class="m-3 col" name="description" type="text" v-model="description" placeholder="Description" required>
-
-            </div>
-            <input name="keywords" type="text" v-model="keywords_string" placeholder="Keywords"
-                title="Keywords must be separated by commas" required>
-            <button class="button" data-action="create_item" @click="create_item">Add Item</button>
         </div>
         
         <div v-if="items">
