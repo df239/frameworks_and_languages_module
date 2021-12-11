@@ -31,6 +31,10 @@
             border-radius: 30px;
             margin:2em;
         }
+
+        .required-asterisk{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -42,34 +46,40 @@
     <div id="main" class="container">
         <form class="my-form container">
             <div class="row my-3 justify-content-evenly">
-                <div class="col-10 col-md-7 my-3 mt-4 order-1">
+                <div class="col-10 col-md-7 my-3 mt-4 order-1 d-inline-flex p-2">
                     <input class="form-control" name="user_id" type="text" v-model="userId" placeholder="User ID" required>
+                    <span class="required-asterisk"> *</span>
                 </div>
-                <div class="col-10 col-md-2 my-3 order-3 order-md-2">
+                <div class="col-10 col-md-2 my-3 order-3 order-md-2 d-inline-flex p-2">
                     <input class="form-control" name="lat" type="number" v-model="lat" placeholder="Latitude" required>
+                    <span class="required-asterisk"> *</span>
                 </div>
                 <div class="col-10 col-md-7 my-3 order-2 order-md-3">
                     <input class="form-control" name="image" type="text" v-model="image" placeholder="Title" required>
                 </div>
-                <div class="col-10 col-md-2 my-3 order-4">
+                <div class="col-10 col-md-2 my-3 order-4 d-inline-flex p-2">
                     <input class="form-control" name="lon" type="number" v-model="lon" placeholder="Longitude" required>
+                    <span class="required-asterisk"> *</span>
                 </div>
             </div>
             <div class="row my-3 justify-content-evenly">
                 <div class="col-10 my-3">
                     <input class="form-control" name="image" type="text" v-model="image" placeholder="Image URL">
                 </div>
-                <div class="col-10 my-3">
+                <div class="col-10 my-3 d-inline-flex p-2">
                     <input class="form-control" name="keywords" type="text" v-model="keywords_string" placeholder="Keywords"
                         title="Keywords must be separated by commas" required>
+                    <span class="required-asterisk"> *</span>
                 </div>
-                <div class="col-10 my-3">
+                <div class="col-10 my-3 d-inline-flex p-2">
                     <textarea class="form-control" name="description" v-model="description" placeholder="Description"
                         required></textarea>
+                    <span class="required-asterisk"> *</span>
                 </div>
                 <div class="col-10 my-3 mb-4">
                     <div class="col-lg-2 col-sm-4 col-6">
                         <button class="btn btn-primary form-control" data-action="create_item" @click="create_item">Add Item</button>
+                        <span class="required-asterisk">* field required</span>
                     </div>
                 </div>
             </div>
