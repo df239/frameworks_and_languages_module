@@ -7,13 +7,26 @@
     <title>Items</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        i{
+            font-size: 3em;
+        }
+
+        #addButton{
+            max-width: 5em;
+            width:75%
+        }
+    </style>
 </head>
 <body>
     <div id="main">
-        <div id="form">
+        <div id="form" class="container-fluid mx-0">
             <div class="row">
-                <button class="btn btn-primary m-4 col-1" data-action="create_item" @click="create_item">Add Item</button>
+                <button id="addButton" class="btn btn-primary m-4 col-1 p-0" data-action="create_item" @click="create_item">
+                    <i class="bi bi-plus-square"></i>
+                </button>
                 <div class="col">
                     <div class="row">
                         <input class="m-2 mt-4 mx-4 col" name="user_id" type="text" v-model="userId" placeholder="User ID" required>
