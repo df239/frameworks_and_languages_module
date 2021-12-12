@@ -53,7 +53,8 @@ router.post('/', cors(corsSetupGeneral), function(req, res){
       image: req.body.image,
       lat: req.body.lat,
       lon: req.body.lon,
-      keywords: req.body.keywords
+      keywords: req.body.keywords,
+      title: req.body.title
     };
     if(items.hasOwnProperty(newID)){
       res.status(201).json(items[newID]);
