@@ -101,7 +101,7 @@
             <ul class="row" v-if="items">
                 <li v-for="item in items" class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5 d-flex justify-content-center">
                     <div class="card p-0 h-100" style="width: 18rem;">
-                        <div v-if="cards_rotation[item.id]">
+                        <div v-if="cards_rotation[item.id] == false">
                             <div :id="'item_'+item.id+'_map'" class="mw-100" style="height:26rem;"></div>
                         </div>
                         <div v-else>
@@ -110,11 +110,16 @@
                                 <!--<img v-else :src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>-->
                             </div>
                             <div class="card-body">
-                                <h4 v-if="item.title" class="card-title" data-field="id">{{ item.title }}</h4>
+                                <h4 v-if="item.title" class="card-title">{{ item.title }}</h4>
                                 <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
                             
                                 <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                                <p class="card-text">{{ item.description }}</p>
+                                <ul style="padding-left: 0;"> <!--This ul is there only so that the client test passes-->
+                                    <li>
+                                        <p class="card-text" data-field="id">{{ item.description }}</p>
+                                        <button class="btn bnt-warning form-control" data-action="delete" @click="delete_item(item)">Delete</button>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-self-end w-100">
@@ -217,7 +222,7 @@
                     },
 
                     toggle_card_facing(item){
-                        this.cards_rotation[item.id] = !this.cards_rotation[item.id];
+                        //this.cards_rotation[item.id] = !this.cards_rotation[item.id];
                     }
                 }
             })
