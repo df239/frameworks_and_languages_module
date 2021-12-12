@@ -31,6 +31,10 @@
             margin-left:20px;
         }
 
+        ul{
+            list-style-type: none;
+        }
+
         .my-form{
             background-color: #cedcf2;
             /*background-color: #efe9d9;*/
@@ -91,8 +95,8 @@
             </div>
         </form>
         <div class="container" style="margin:2em;">
-            <div class="row" v-if="items">
-                <div v-for="item in items" class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5 d-flex justify-content-center">
+            <ul class="row" v-if="items">
+                <li v-for="item in items" class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5 d-flex justify-content-center">
                     <div class="card p-0 h-100" style="width: 18rem;">
                         <div class="mw-100" style="height: 18rem;">
                             <img :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%"/>
@@ -115,8 +119,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
 
         <script>
