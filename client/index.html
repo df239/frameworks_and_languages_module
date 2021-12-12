@@ -88,21 +88,23 @@
                 </div>
             </div>
         </form>
-
-        <div class="row justify-content-evenly" v-if="items">
-            <div v-for="item in items" class="card col-3 p-0 mb-5" style="width: 18rem;">
-                <div class="mw-100">
-                    <img :src="item.image" :alt="item.description" class="card-img-top" />
-                </div>
-
-                <div class="card-body">
-                    <h4 class="card-title" data-field="id">{{ item.id }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                    <p class="card-text">{{ item.description }}</p>
-                    <button class="btn-warning" data-action="delete" @click="delete_item(item)">Delete item</button>
+        <div class="container" style="margin:2em;">
+            <div class="row" v-if="items">
+                <div v-for="item in items" class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5 d-flex justify-content-center">
+                    <div class="card p-0 h-100" style="width: 18rem;">
+                        <div class="mw-100">
+                            <img :src="item.image" :alt="item.description" class="card-img-top" />
+                        </div>
+            
+                        <div class="card-body h-100">
+                            <h4 class="card-title" data-field="id">{{ item.id }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
+                                <p class="card-text">{{ item.description }}</p>
+                                <button class="btn-warning" data-action="delete" @click="delete_item(item)">Delete item</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         
         <div v-if="items">
