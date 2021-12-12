@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="icon" href="favicon.ico">
     <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        
+    </script>
     <style>
         i{
             font-size: 1rem;
@@ -98,25 +101,31 @@
             <ul class="row" v-if="items">
                 <li v-for="item in items" class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5 d-flex justify-content-center">
                     <div class="card p-0 h-100" style="width: 18rem;">
-                        <div class="mw-100" style="height: 18rem;">
-                            <img :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%"/>
-                            <!--<img v-else :src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>-->
+                        <div v-if="cards_rotation[item.id]">
+                            <div :id="'item_'+item.id+'_map'" class="mw-100" style="height:26rem;"></div>
                         </div>
-                        <div class="card-body h-100">
-
-                            <h4 v-if="item.title" class="card-title" data-field="id">{{ item.title }}</h4>
-                            <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
-
-                            <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                            <p class="card-text">{{ item.description }}</p>
-                            <div class="d-flex justify-content-between align-self-end">
-                                <button class="btn btn-info form-control" data-action="show_map" @click="" style="width: 3rem">
-                                    <i class="bi bi-geo-alt"></i>
-                                </button>
-                                <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" style="width: 3rem">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                        <div v-else>
+                            <div class="mw-100" style="height: 18rem;">
+                                <img :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%" />
+                                <!--<img v-else :src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>-->
                             </div>
+                            <div class="card-body">
+                                <h4 v-if="item.title" class="card-title" data-field="id">{{ item.title }}</h4>
+                                <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
+                            
+                                <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
+                                <p class="card-text">{{ item.description }}</p>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-self-end w-100">
+                            <button class="btn btn-info form-control" data-action="show_map" @click="toggle_card_facing(item)"
+                                style="width: 3rem">
+                                <i v-if="!cards_rotation[item.id]" class="bi bi-geo-alt"></i>
+                                <i v-else class="bi bi-image"></i>
+                            </button>
+                            <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" style="width: 3rem">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </li>
@@ -133,6 +142,7 @@
                 data() {
                     return {
                         items: null,
+                        cards_rotation: {},
 
                         userId:'',
                         description:'',
@@ -159,6 +169,14 @@
                             })
                             .then(data => this.items = data)
                             .catch(err => console.log(err.message))
+                        
+                        for(let item in this.items){
+                            if(!this.cards_rotation.hasOwnProperty(item.id)){
+                                this.cards_rotation[item.id] = true;
+                            }
+                            console.log(this.cards_rotation[item.id]);
+                        }
+                        
                     },
 
                     async create_item(){
@@ -196,11 +214,32 @@
                         }).catch(err => console.log(err.message))
                         
                         this.load_items()
+                    },
+
+                    toggle_card_facing(item){
+                        this.cards_rotation[item.id] = !this.cards_rotation[item.id];
                     }
                 }
             })
 
             app.mount('#main')
+
+            function initMap() {
+                for (var item in app.items) {
+                    console.log("hello")
+                    var pos = { lat: item.lat, lng: item.lon };
+
+                    var map = new google.maps.Map(document.getElementById("item_" + item.id + "_map"), {
+                        zoom: 4,
+                        center: pos,
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                    });
+                }
+            }
         </script>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -211,5 +250,9 @@
             window.history.replaceState(null, null, window.location.href);
         }
     </script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2hT2FiD6cf6LNGAH28VBvvwIQBfSbvkg&callback=initMap">
+    </script>
+
+
 </body>
 </html>
