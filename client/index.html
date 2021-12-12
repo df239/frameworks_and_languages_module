@@ -12,7 +12,8 @@
     <script src="https://unpkg.com/vue@next"></script>
     <style>
         i{
-            font-size: 3em;
+            font-size: 1rem;
+            cursor:pointer;
         }
 
         body{
@@ -99,9 +100,16 @@
                         </div>
                         <div class="card-body h-100">
                             <h4 class="card-title" data-field="id">{{ item.id }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                                <p class="card-text">{{ item.description }}</p>
-                                <button class="btn-warning" data-action="delete" @click="delete_item(item)">Delete item</button>
+                            <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
+                            <p class="card-text">{{ item.description }}</p>
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-info form-control" data-action="show_map" @click="" style="width: 3rem">
+                                    <i class="bi bi-geo-alt"></i>
+                                </button>
+                                <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" style="width: 3rem">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
