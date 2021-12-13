@@ -61,7 +61,7 @@
         </div>
     </nav>
     <div id="main" class="container">
-        <form class="my-form container">
+        <form id="form" class="my-form container" @submit="return false;">
             <div class="row my-3 justify-content-evenly">
                 <div class="col-10 col-md-7 my-3 mt-4 order-1 d-inline-flex p-2">
                     <input class="form-control" name="user_id" type="text" v-model="userId" placeholder="User ID" required>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-10 my-3 mb-4">
                     <div class="col-lg-2 col-sm-4 col-6">
-                        <button class="btn btn-primary form-control" data-action="create_item" @click="create_item" type="button">Add Item</button>
+                        <button class="btn btn-primary form-control" data-action="create_item" @click="onSubmit">Add Item</button>
                         <span class="required-asterisk">* required field</span>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
                         this.lon = '';
                         this.keywords_string = '';
                         this.title = '';
-                        
+
                         this.load_items()
                     },
 
@@ -223,6 +223,16 @@
                         }).catch(err => console.log(err.message))
                         
                         this.load_items()
+                    },
+
+                    onSubmit(event){
+                        event.preventDefault(); 
+                        var ele = document.getElementById("form");
+                        var chk_status = ele.checkValidity();
+                        ele.reportValidity();
+                        if (chk_status){
+                            this.create_item();
+                        }
                     },
 
                     toggle_card_facing(item){
