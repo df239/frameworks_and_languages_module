@@ -118,12 +118,12 @@
                             <p class="card-text mt-4">{{ item.description }}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-self-end w-100">
-                            <button class="btn btn-info form-control" data-action="show_map" @click="toggle_card_facing(item)"
-                                style="width: 3rem">
-                                <i v-if="!cards_rotation[item.id]" class="bi bi-geo-alt"></i>
-                                <i v-else class="bi bi-image"></i>
+                            <button class="btn btn-info form-control" data-action="show_map" @click="openGoogleMap(item)"
+                                style="width: 3rem" title="Show on map">
+                                <i class="bi bi-geo-alt"></i>
                             </button>
-                            <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" style="width: 3rem">
+                            <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" 
+                                style="width: 3rem" title="Delete">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
@@ -142,7 +142,6 @@
                 data() {
                     return {
                         items: null,
-                        cards_rotation: {},
 
                         userId:'',
                         description:'',
@@ -169,14 +168,6 @@
                             })
                             .then(data => this.items = data)
                             .catch(err => console.log(err.message))
-                        
-                        for(let item in this.items){
-                            if(!this.cards_rotation.hasOwnProperty(item.id)){
-                                this.cards_rotation[item.id] = true;
-                            }
-                            console.log(this.cards_rotation[item.id]);
-                        }
-                        
                     },
 
                     async create_item(){
@@ -225,6 +216,14 @@
                         this.load_items()
                     },
 
+                    openGoogleMap(item){
+                        var mapUrl = "https://www.google.com/maps/search/?api=1&query=";
+                        mapUrl += item.lat;
+                        mapUrl += "%2C";
+                        mapUrl += item.lon;
+                        window.open(mapUrl);
+                    },
+
                     onSubmit(event){
                         event.preventDefault(); 
                         var ele = document.getElementById("form");
@@ -233,10 +232,6 @@
                         if (chk_status){
                             this.create_item();
                         }
-                    },
-
-                    toggle_card_facing(item){
-                        //this.cards_rotation[item.id] = !this.cards_rotation[item.id];
                     }
                 }
             })
