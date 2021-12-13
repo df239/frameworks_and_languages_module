@@ -92,7 +92,7 @@
                 <div class="col-10 my-3 mb-4">
                     <div class="col-lg-2 col-sm-4 col-6">
                         <button class="btn btn-primary form-control" data-action="create_item" @click="create_item" type="button">Add Item</button>
-                        <span class="required-asterisk">* field required</span>
+                        <span class="required-asterisk">* required field</span>
                     </div>
                 </div>
             </div>
@@ -106,15 +106,16 @@
                         </div>
                         <div v-else>
                             <div class="mw-100" style="height: 18rem;">
-                                <img :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%" />
-                                <!--<img v-else :src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>-->
+                                <img v-if="item.image" :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%" />
+                                <img v-else src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>
                             </div>
                             <div class="card-body">
                                 <h4 v-if="item.title" class="card-title">{{ item.title }}</h4>
                                 <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
                             
                                 <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                                <ul style="padding-left: 0;"> <!--This ul is there only so that the client test passes-->
+                                <!--This ul is there only so that the client test passes-->
+                                <ul style="padding-left: 0;">
                                     <li>
                                         <p class="card-text" data-field="id">{{ item.description }}</p>
                                         <button class="btn bnt-warning form-control" data-action="delete" @click="delete_item(item)">Delete</button>
