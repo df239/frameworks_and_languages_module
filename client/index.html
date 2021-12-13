@@ -105,34 +105,28 @@
             <ul class="row" v-if="items">
                 <li v-for="item in items" class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5 d-flex justify-content-center">
                     <div class="card p-0 h-100 item-card">
-                        <div v-if="cards_rotation[item.id] == false" class="h-auto">
-                            <div :id="'item_'+item.id+'_map'" class="mw-100" style="height:26rem;"></div>
+                        <div class="mw-100" style="height: 18rem;">
+                            <img v-if="item.image" :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%" />
+                            <img v-else src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>
                         </div>
-                        <div v-else class="h-auto d-flex flex-column">
-                            <div class="mw-100" style="height: 18rem;">
-                                <img v-if="item.image" :src="item.image" :alt="item.description" class="card-img-top" style="height: 100%" />
-                                <img v-else src="placeholder.png" :alt="item.description" class="card-img-top" style="height: 100%"/>
-                            </div>
-                            <div class="card-body h-auto">
-                                <h4 v-if="item.title" class="card-title">{{ item.title }}</h4>
-                                <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
-                            
-                                <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                                <!--This ul is there only so that the client test passes-->
-                                <p class="card-text mt-4">{{ item.description }}</p>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between align-self-end w-100">
-                                <button class="btn btn-info form-control" data-action="show_map" @click="toggle_card_facing(item)"
-                                    style="width: 3rem">
-                                    <i v-if="!cards_rotation[item.id]" class="bi bi-geo-alt"></i>
-                                    <i v-else class="bi bi-image"></i>
-                                </button>
-                                <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" style="width: 3rem">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <div class="card-body h-auto">
+                            <h4 v-if="item.title" class="card-title">{{ item.title }}</h4>
+                            <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
                         
+                            <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
+                            <!--This ul is there only so that the client test passes-->
+                            <p class="card-text mt-4">{{ item.description }}</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-self-end w-100">
+                            <button class="btn btn-info form-control" data-action="show_map" @click="toggle_card_facing(item)"
+                                style="width: 3rem">
+                                <i v-if="!cards_rotation[item.id]" class="bi bi-geo-alt"></i>
+                                <i v-else class="bi bi-image"></i>
+                            </button>
+                            <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" style="width: 3rem">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 </li>
             </ul>
