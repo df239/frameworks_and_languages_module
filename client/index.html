@@ -10,22 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="icon" href="favicon.ico">
     <script src="https://unpkg.com/vue@next"></script>
+
     <script>
-        function initMap() {
-            console.log("hello")
-            var pos = { lat: 51.28008722971613, lng: 1.0897526289681116 };
-
-            var map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: pos,
-            });
-
-            /*
-            var marker = new google.maps.Marker({
-                position: pos,
-                map: map,
-            });*/
-            }
     </script>
     <style>
         i{
@@ -148,14 +134,19 @@
                             <h4 v-else class="card-title" data-field="id">Item {{ item.id }}</h4>
                         
                             <h6 class="card-subtitle mb-2 text-muted">By {{ item.user_id }}</h6>
-                            <!--This ul is there only so that the client test passes-->
                             <p class="card-text mt-4">{{ item.description }}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-self-end w-100">
-                            <button class="btn btn-info form-control" data-action="show_map" @click="openGoogleMap(item)"
-                                style="width: 3rem" title="Show on map">
-                                <i class="bi bi-geo-alt"></i>
-                            </button>
+                            <div class="d-flex justify-content-left">
+                                <button class="btn btn-info form-control" data-action="show_map" @click="openGoogleMap(item)" style="width: 3rem"
+                                    title="Show on map">
+                                    <i class="bi bi-map"></i>
+                                </button>
+                                <button class="btn btn-info form-control ms-2" data-action="show_marker" @click="addMarker(item)" style="width: 3rem"
+                                    title="Add marker to the map">
+                                    <i class="bi bi-geo-alt"></i>
+                                </button>
+                            </div>
                             <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" 
                                 style="width: 3rem" title="Delete">
                                 <i class="bi bi-trash"></i>
@@ -171,6 +162,8 @@
 	        const apiUrl = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
             //var apiUrl = "https://8000-silver-impala-bbndrhb9.ws-eu17.gitpod.io";
             //var apiUrl = "http://localhost:8000"
+
+            var map;
 
             const app = Vue.createApp({
                 data() {
@@ -188,7 +181,7 @@
                     }
                 },
                 mounted() {
-                    this.load_items()
+                    this.load_items();
                 },
                 methods:{
                     load_items(){
@@ -259,6 +252,13 @@
                         window.open(mapUrl);
                     },
 
+                    addMarker(item){
+                        var marker = new google.maps.Marker({
+                            position: {lat: item.lat, lng: item.lon},
+                            map: map
+                        });
+                    },
+
                     onSubmit(event){
                         event.preventDefault(); 
                         var ele = document.getElementById("form");
@@ -273,7 +273,17 @@
                         this.collapsed_div = !this.collapsed_div;
                     }
                 }
-            })
+            });
+
+            const CENTER = { lat: 51.28008722971613, lng: 1.0897526289681116 };
+
+            function initMap() {
+                //console.log("hello")
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 13,
+                    center: CENTER,
+                });
+            }
 
             app.mount('#main')
         </script>
