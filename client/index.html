@@ -148,7 +148,7 @@
                                 </button>
                                 <button v-else class="btn btn-info form-control ms-2" data-action="hide_marker"
                                     @click="hideMarker(item)" style="width: 3rem" title="Remove marker from the map">
-                                    <i class="bi bi-geo-alt"></i>
+                                    <i class="bi bi-geo-alt-fill"></i>
                                 </button>
                             </div>
                             <button class="btn btn-warning form-control" data-action="delete" @click="delete_item(item)" 
@@ -283,7 +283,7 @@
 
                     hideMarker(item){
                         item.map_marker.setVisible(false);
-                        item.marker_visible = false;
+                        item.marker_visible = false;//marker icon could be changeable
                     },
 
                     onSubmit(event){
