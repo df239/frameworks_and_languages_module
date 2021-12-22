@@ -16,7 +16,7 @@
             var pos = { lat: 51.28008722971613, lng: 1.0897526289681116 };
 
             var map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 4,
+                zoom: 13,
                 center: pos,
             });
 
@@ -50,6 +50,11 @@
 
         ul{
             list-style-type: none;
+        }
+
+        #map{
+            height: 35rem;
+            min-height: 350px;
         }
 
         .my-form{
@@ -120,14 +125,14 @@
                 <button class="btn btn-primary form-control" type="button" data-bs-toggle="collapse" data-bs-target="#mapDiv"
                     aria-expanded="false" aria-controls="mapDiv" @click="toggleCollapsed" style="width: 100px;">
                     <div class="d-flex justify-content-evenly">
-                        <span>Filter</span>
+                        <span>Map</span>
                         <i v-if="collapsed_div" class="bi bi-caret-down-fill"></i>
                         <i v-else class="bi bi-caret-up-fill"></i>
                     </div>
                 </button>
             </p>
             <div class="collapse" id="mapDiv">
-                <div id="map" style="height: 300px;"></div>
+                <div id="map" class="m-4"></div>
             </div>
         </div>
         <div class="container" style="margin:2em;">
