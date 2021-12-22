@@ -142,8 +142,12 @@
                                     title="Show on map">
                                     <i class="bi bi-map"></i>
                                 </button>
-                                <button class="btn btn-info form-control ms-2" data-action="show_marker" @click="addMarker(item)" style="width: 3rem"
+                                <button v-if="!item.marker_visible" class="btn btn-info form-control ms-2" data-action="show_marker" @click="showMarker(item)" style="width: 3rem"
                                     title="Add marker to the map">
+                                    <i class="bi bi-geo-alt"></i>
+                                </button>
+                                <button v-else class="btn btn-info form-control ms-2" data-action="hide_marker"
+                                    @click="hideMarker(item)" style="width: 3rem" title="Remove marker from the map">
                                     <i class="bi bi-geo-alt"></i>
                                 </button>
                             </div>
@@ -194,7 +198,27 @@
                                     return res.json();
                                 }
                             })
-                            .then(data => this.items = data)
+                            .then((data) => {
+                                this.items = data;
+
+                                for(var item of this.items){
+                                    var markerTitle = '';
+                                    if(item.title != ''){
+                                        markerTitle = item.title;
+                                    }
+                                    else{
+                                        markerTitle = "Item "+item.id;
+                                    }
+                                    const marker = new google.maps.Marker({
+                                        position: { lat: item.lat, lng: item.lon },
+                                        map: map,
+                                        visible: false,
+                                        title: markerTitle
+                                    });
+                                    item.marker_visible = false;
+                                    item.map_marker = marker;
+                                }
+                            })
                             .catch(err => console.log(err.message))
                     },
 
@@ -252,11 +276,14 @@
                         window.open(mapUrl);
                     },
 
-                    addMarker(item){
-                        var marker = new google.maps.Marker({
-                            position: {lat: item.lat, lng: item.lon},
-                            map: map
-                        });
+                    showMarker(item){
+                        item.map_marker.setVisible(true);
+                        item.marker_visible = true;
+                    },
+
+                    hideMarker(item){
+                        item.map_marker.setVisible(false);
+                        item.marker_visible = false;
                     },
 
                     onSubmit(event){
