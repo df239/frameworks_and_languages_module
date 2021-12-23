@@ -10,9 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="icon" href="favicon.ico">
     <script src="https://unpkg.com/vue@next"></script>
-
-    <script>
-    </script>
     <style>
         i{
             font-size: 1rem;
@@ -201,13 +198,15 @@
                             .then((data) => {
                                 this.items = data;
 
+                                //create a map marker for each item, but make it invisible
+                                //all markers also have a title so that the user can tell them apart
                                 for(var item of this.items){
                                     var markerTitle = '';
-                                    if(item.title != ''){
-                                        markerTitle = item.title;
+                                    if(item.title == '' || !item.hasOwnProperty('title')){
+                                        markerTitle = "Item " + item.id;
                                     }
                                     else{
-                                        markerTitle = "Item "+item.id;
+                                        markerTitle = item.title;
                                     }
                                     const marker = new google.maps.Marker({
                                         position: { lat: item.lat, lng: item.lon },
@@ -256,6 +255,8 @@
                         this.keywords_string = '';
                         this.title = '';
 
+                        //when adding a new item, it hides all markers, 
+                        //because if an item is added while a marker is displayed, the marker would stay stay on the screen forever
                         for(let item of this.items){
                             this.hideMarker(item);
                         }
@@ -272,6 +273,7 @@
                         this.load_items()
                     },
 
+                    //opens a new browser tab with google maps and a marker at the item's location
                     openGoogleMap(item){
                         var mapUrl = "https://www.google.com/maps/search/?api=1&query=";
                         mapUrl += item.lat;
@@ -287,9 +289,10 @@
 
                     hideMarker(item){
                         item.map_marker.setVisible(false);
-                        item.marker_visible = false;//marker icon could be changeable
+                        item.marker_visible = false;
                     },
 
+                    //method for checking form validation on submission without the default redirect behavior
                     onSubmit(event){
                         event.preventDefault(); 
                         var ele = document.getElementById("form");
@@ -306,8 +309,8 @@
                 }
             });
 
+            //initialize the map, centered at CCCU
             const CENTER = { lat: 51.28008722971613, lng: 1.0897526289681116 };
-
             function initMap() {
                 //console.log("hello")
                 map = new google.maps.Map(document.getElementById("map"), {
@@ -322,11 +325,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-    <script>
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF47PFXttVhHj40rBHSrsA0fnxP3C0x68&callback=initMap">
     </script>
 
